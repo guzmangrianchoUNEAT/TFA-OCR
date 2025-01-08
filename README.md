@@ -62,8 +62,8 @@ Esto permite evaluar qué tan bien el modelo reconoce caracteres estilizados de 
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/usuario/tfa-ocr.git
-cd tfa-ocr
+git clone https://github.com/guzmangrianchoUNEAT/TFA-OCR.git
+cd TFA-OCR
 ```
 
 ### 2. Crear un entorno virtual
