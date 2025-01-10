@@ -133,6 +133,6 @@ def segment_characters_with_lines(image_path, output_dir, space_threshold=50, ve
     return char_images
 
 if __name__ == "__main__":
-    input_image = "data/input/parrafo3.png"
+    input_image = "data/input/hola.png"
     output_dir = "data/segmented_chars"
     segment_characters_with_lines(input_image, output_dir)

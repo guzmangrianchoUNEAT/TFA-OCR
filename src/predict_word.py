@@ -37,7 +37,7 @@ def predict_word_with_spaces(image_path, model_path, label_to_index_path):
     return predicted_text
 
 if __name__ == "__main__":
-    input_image = "data/input/prueba2.png"
+    input_image = "data/input/hola.png"
     model_path = "models/cnn_model.keras"
     label_to_index_path = "models/label_to_index.npy"
     predict_word_with_spaces(input_image, model_path, label_to_index_path)
