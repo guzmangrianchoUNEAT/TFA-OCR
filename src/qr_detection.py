@@ -1,3 +1,4 @@
+import os
 import cv2
 import numpy as np
 
@@ -120,6 +121,14 @@ def extract_qr_code(image_path):
 
     # Transformar perspectiva
     qr_code = get_perspective_transform(original_image, contour)
+
+    # Guardar el QR Code recortado
+    output_dir = "output"
+    os.makedirs(output_dir, exist_ok=True)
+    output_path = os.path.join(output_dir, "qr_code_extracted.png")
+    cv2.imwrite(output_path, qr_code)
+    print(f"QR Code exportado a: {output_path}")
+
     return qr_code
 
 if __name__ == "__main__":

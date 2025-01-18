@@ -34,6 +34,16 @@ def predict_word_with_spaces(image_path, model_path, label_to_index_path):
             predicted_text += substitution_map.get(predicted_label, predicted_label)
 
     print(f"\nTexto predicho:\n{predicted_text}")
+
+    # Exportar el texto predicho a un archivo .txt
+    output_dir = "output"
+    os.makedirs(output_dir, exist_ok=True)
+    output_path = os.path.join(output_dir, "predicted_text.txt")
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(predicted_text)
+
+    print(f"Texto exportado a: {output_path}")
+
     return predicted_text
 
 if __name__ == "__main__":
