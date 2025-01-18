@@ -80,7 +80,7 @@ def segment_lines(image):
 
     return [(image[start:end, :], start, end) for start, end in lines]
 
-def segment_characters_with_lines(image_path, output_dir, space_threshold=50, vertical_threshold=180):
+def segment_characters_with_lines(image_path, output_dir, space_threshold_percentage=0.3, vertical_threshold=180):
     """
     Segmenta las líneas y caracteres de una imagen, detecta espacios y guarda los recortes.
     """
@@ -111,7 +111,7 @@ def segment_characters_with_lines(image_path, output_dir, space_threshold=50, ve
             x, y, w, h = cv2.boundingRect(contour)
 
             if w * h > 50:
-                if prev_x is not None and (x - prev_x) > space_threshold:
+                if prev_x is not None and (x - prev_x) > space_threshold_percentage * max_dimension:
                     char_images.append("SPACE")
 
                 char = line_image[y:y + h, x:x + w]
@@ -122,7 +122,7 @@ def segment_characters_with_lines(image_path, output_dir, space_threshold=50, ve
 
                 prev_x = x + w
 
-        char_images.append("NEWLINE")  # Agregar indicador de nueva línea
+        char_images.append("NEWLINE") 
         line_counter += 1
 
     for char_path in char_images:
@@ -133,6 +133,6 @@ def segment_characters_with_lines(image_path, output_dir, space_threshold=50, ve
     return char_images
 
 if __name__ == "__main__":
-    input_image = "data/input/hola.png"
+    input_image = "data/input/ordenador.png"
     output_dir = "data/segmented_chars"
     segment_characters_with_lines(input_image, output_dir)

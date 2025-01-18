@@ -25,7 +25,7 @@ def generate_image(text, font_path, output_dir, size=(200, 200), font_size=100):
         return
 
     # Calcular posición para centrar el texto
-    text_width, text_height = draw.textbbox((0, 0), text, font=font)[2:]  # Cambiado a textbbox
+    text_width, text_height = draw.textbbox((0, 0), text, font=font)[2:]  
     position = ((size[0] - text_width) // 2, (size[1] - text_height) // 2)
 
     # Dibujar el texto
@@ -42,14 +42,14 @@ if __name__ == "__main__":
         "minus": "data/examples/minus",
         "nums": "data/examples/nums"
     }
-    font_path = "assets/KidsOnly.otf"  # Cambia esto a la ruta de la fuente en tu sistema
+    font_path = "assets/KidsOnly.otf"
 
     # Generar letras mayúsculas
-    for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+    for letter in "ABCDEFGHIJKLMN\u00d1OPQRSTUVWXYZ":
         generate_image(letter, font_path, output_dirs["mayus"])
 
     # Generar letras minúsculas
-    for letter in "abcdefghijklmnopqrstuvwxyz":
+    for letter in "abcdefghijklmn\u00f1opqrstuvwxyz":
         generate_image(letter, font_path, output_dirs["minus"])
 
     # Generar números

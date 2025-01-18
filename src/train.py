@@ -25,13 +25,13 @@ def load_data(base_dir):
                         image = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
                         if image is not None:
                             X.append(cv2.resize(image, (32, 32)))
-                            y.append(label)  # Etiqueta es el carácter (A, B, N1, n1, ...)
+                            y.append(label) 
     return np.array(X), np.array(y)
 
 # 2. Preprocesar datos
 def preprocess_data(X, y):
     """Normaliza imágenes y convierte etiquetas a categóricas."""
-    X = X.reshape(-1, 32, 32, 1) / 255.0  # Normalización y agregar canal
+    X = X.reshape(-1, 32, 32, 1) / 255.0  
     unique_labels = sorted(set(y))
     label_to_index = {label: idx for idx, label in enumerate(unique_labels)}
     y = np.array([label_to_index[label] for label in y])
@@ -61,9 +61,9 @@ def build_model(input_shape, num_classes):
 def train_model(X_train, y_train, X_val, y_val, model, label_to_index):
     """Entrena el modelo con aumentación de datos y early stopping."""
     datagen = ImageDataGenerator(
-        rotation_range=10,  # Rotación ligera
-        width_shift_range=0.1,  # Desplazamiento horizontal
-        height_shift_range=0.1  # Desplazamiento vertical
+        rotation_range=15,  
+        width_shift_range=0.1,  
+        height_shift_range=0.1 
     )
     datagen.fit(X_train)
 
@@ -73,7 +73,7 @@ def train_model(X_train, y_train, X_val, y_val, model, label_to_index):
     history = model.fit(
         datagen.flow(X_train, y_train, batch_size=32),
         validation_data=(X_val, y_val),
-        epochs=100,  # Incrementar número de épocas
+        epochs=100, 
         callbacks=[early_stopping],
         verbose=1
     )
@@ -105,7 +105,7 @@ def plot_metrics(history):
 
 # 6. Main
 if __name__ == "__main__":
-    base_dir = 'data/unified'  # Directorio con datos procesados
+    base_dir = 'data/unifiedFonts' 
     X, y = load_data(base_dir)
     X, y, label_to_index = preprocess_data(X, y)
 
@@ -126,5 +126,5 @@ if __name__ == "__main__":
     plot_metrics(history)
 
     # Guardar modelo entrenado
-    model.save('models/cnn_model2.keras')
-    print("Modelo guardado en 'models/cnn_model2.keras'")
+    model.save('models/cnn_model_fonts.keras')
+    print("Modelo guardado en 'models/cnn_model_fonts.keras'")

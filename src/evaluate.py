@@ -65,7 +65,7 @@ def predict_and_evaluate(model, X, y_true, filenames, label_to_index):
         predicted_classes,
         labels=present_classes,
         target_names=[index_to_label[c] for c in present_classes],
-        zero_division=0  # Evitar errores en clases sin predicciones
+        zero_division=0  
     ))
 
     return predicted_classes

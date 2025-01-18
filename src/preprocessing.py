@@ -29,8 +29,8 @@ def process_and_unify_data(raw_dir, unified_dir, size=(32, 32), augmentations_pe
             rotated = cv2.warpAffine(image, M, size, flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=255)
             
             # Desplazamiento aleatorio
-            tx = np.random.uniform(-5, 5)  # Desplazamiento horizontal
-            ty = np.random.uniform(-5, 5)  # Desplazamiento vertical
+            tx = np.random.uniform(-5, 5)  
+            ty = np.random.uniform(-5, 5) 
             M = np.float32([[1, 0, tx], [0, 1, ty]])
             shifted = cv2.warpAffine(rotated, M, size, flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=255)
             
@@ -78,6 +78,6 @@ def process_and_unify_data(raw_dir, unified_dir, size=(32, 32), augmentations_pe
 
 # Ejemplo de uso
 if __name__ == "__main__":
-    raw_dir = 'data/raw'  # Directorio con los datos sin procesar
-    unified_dir = 'data/unified'  # Directorio para almacenar los datos procesados
+    raw_dir = 'data/raw' 
+    unified_dir = 'data/unified' 
     process_and_unify_data(raw_dir, unified_dir)
