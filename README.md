@@ -106,49 +106,47 @@ El proyecto tiene la siguiente estructura:
 
 ```
 .
+├── assets/
+│   ├── training_fonts/     # Fuentes TTF para generar datasets
+│   ├── KidsOnly.otf        # Ejemplo de fuente tipográfica
+│
 ├── data/
-│   ├── input/           # Carpeta para colocar imágenes de entrada
-│   ├── segmented_chars/ # Carpeta donde se guardan caracteres segmentados
+│   ├── input/              # Carpeta para colocar imágenes de entrada
+│   ├── segmented_chars/    # Carpeta donde se guardan caracteres segmentados
+│   ├── raw/                # Imágenes sin procesar
+│   ├── unified/            # Imágenes procesadas (manuscritas)
+│   ├── unifiedFonts/       # Imágenes procesadas (tipográficas)
 │
 ├── models/
-│   ├── cnn_model.keras       # Modelo CNN entrenado para manuscritos
-│   ├── cnn_model_fonts.keras # Modelo CNN entrenado para fuentes tipográficas
-│   ├── label_to_index.npy    # Diccionario de etiquetas del modelo
+│   ├── cnn_model.keras        # Modelo CNN entrenado para manuscritos
+│   ├── cnn_model_fonts.keras  # Modelo CNN entrenado para fuentes tipográficas
+│   ├── label_to_index.npy     # Diccionario de etiquetas del modelo
 │
 ├── src/
+│   ├── evaluate.py             # Evalúa el modelo CNN
+│   ├── generate_font_dataset.py # Genera datasets desde fuentes TTF
 │   ├── main.py                 # Archivo principal
-│   ├── segment_characters.py   # Segmenta caracteres, detecta espacios y cambios de línea
-│   ├── predict_word.py         # Predice texto
-│   ├── generate_dataset.py     # Crea un dataset a partir de fuentes TTF
+│   ├── predict_word.py         # Predice texto en base a caracteres segmentados
+│   ├── preprocessing.py        # Preprocesa imágenes para el modelo
+│   ├── qr_decode.py            # Decodifica QR Codes
+│   ├── qr_detection.py         # Detecta y recorta QR Codes
+│   ├── segment_characters.py   # Segmenta caracteres, detecta espacios y líneas
+│   ├── train.py                # Entrena un modelo CNN
+│   ├── train3models.py         # Entrena y compara múltiples modelos CNN
+│   ├── utils.py                # Funciones auxiliares
 │
-├── requirements.txt    # Dependencias del proyecto
-└── README.md           # Documentación del proyecto
+├── logs/                       # Carpeta para guardar logs de entrenamiento
+│
+├── requirements.txt            # Dependencias del proyecto
+└── README.md                   # Documentación del proyecto
+
 ```
 
 ---
 
 ## **Cómo probar el proyecto**
 
-### **1. Segmentar caracteres manualmente**
-
-Puedes usar `segment_characters.py` para segmentar los caracteres de una imagen y guardarlos en la carpeta `data/segmented_chars`.
-
-#### **Instrucciones**:
-
-1. Coloca una imagen en la carpeta `data/input/` (por ejemplo, `prueba.png`).
-2. Modifica la variable `input_image` en el archivo `segment_characters.py` para apuntar a tu imagen:
-   ```python
-   input_image = "data/input/prueba.png"
-   ```
-3. Ejecuta el script:
-   ```bash
-   python src/segment_characters.py
-   ```
-4. Los caracteres segmentados se guardarán en `data/segmented_chars`.
-
----
-
-### **2. Usar el sistema completo con `main.py`**
+### **1. Usar el sistema completo con `main.py`**
 
 El archivo `main.py` automatiza el flujo completo: selección de imagen, segmentación, predicción y visualización del texto.
 
@@ -161,13 +159,5 @@ El archivo `main.py` automatiza el flujo completo: selección de imagen, segment
 2. Aparecerá un cuadro de diálogo para seleccionar una imagen desde tu explorador de archivos. Elige una imagen de la carpeta `data/input`.
 3. El sistema segmentará los caracteres, detectará espacios y predecirá el texto presente en la imagen.
 4. El texto predicho se mostrará en una ventana emergente profesional, y luego también en la consola.
-
----
-
-## **Personalización**
-
-### Espacios y saltos de línea
-
-Puedes ajustar el umbral de detección de espacios y líneas modificando las variables `space_threshold` y `vertical_threshold` en `segment_characters_with_lines` del archivo `segment_characters.py`.
 
 ---
