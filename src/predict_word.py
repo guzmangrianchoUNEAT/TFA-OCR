@@ -1,7 +1,7 @@
 import os
 import cv2
 import numpy as np
-from tensorflow.keras.models import load_model
+from tensorflow.keras.models import load_model # type: ignore
 from segment_characters import segment_characters_with_lines
 
 def predict_word_with_spaces(image_path, model_path, label_to_index_path):

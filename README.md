@@ -25,11 +25,23 @@ Este script organiza y prepara las imágenes para que el modelo las pueda usar.
 
 ---
 
-### **2. Entrenamiento del modelo (`train.py`)**
+### **2. Generación de un dataset con fuentes TTF (`generate_dataset.py`)**
+
+Este script crea un nuevo dataset basado en fuentes tipográficas de computadora.
+
+- **Entrada**: Archivos TTF de fuentes almacenados en `assets/fonts/`.
+- **Proceso**:
+  1. Se renderizan caracteres (mayúsculas, minúsculas y números) utilizando las fuentes TTF.
+  2. Los caracteres renderizados se escalan y se centran según su contorno real.
+  3. El dataset final se guarda en `data/unifiedFonts/` para ser usado en el entrenamiento.
+
+---
+
+### **3. Entrenamiento del modelo (`train.py`)**
 
 Este script entrena el modelo para reconocer caracteres.
 
-- **Entrada**: Imágenes de `data/unified/`.
+- **Entrada**: Imágenes de `data/unified/` o `data/unifiedFonts/`.
 - **Modelo**: Red neuronal que aprende a distinguir letras y números.
 - **Proceso**:
 
@@ -39,21 +51,23 @@ Este script entrena el modelo para reconocer caracteres.
      - **Early stopping**: Detiene el entrenamiento cuando no hay mejoras.
 
 - **Salida**:
-  - El modelo entrenado se guarda en `models/cnn_model.keras`.
+  - El modelo entrenado se guarda en:
+    - `models/cnn_model.keras` (manuscritos).
+    - `models/cnn_model_fonts.keras` (fuentes tipográficas).
   - Un archivo `label_to_index.npy` que indica qué etiqueta corresponde a cada carácter.
 
 ---
 
-### **3. Evaluación del modelo (`evaluate.py`)**
+### **4. Evaluación del modelo (`evaluate.py`)**
 
 Este script verifica cómo de bien funciona el modelo.
 
-- Usa imágenes de prueba en `data/examples/`. Estas imágenes son letras y números con un estilo manuscrito, generadas automáticamente mediante el script `utils.py` y la font guardada en `assets/`.
+- Usa imágenes de prueba en `data/examples/`. Estas imágenes incluyen caracteres manuscritos y tipográficos, generados automáticamente.
 - Genera un reporte con:
   - El porcentaje de aciertos.
   - Métricas como precisión, recall y F1-score.
 
-Esto permite evaluar qué tan bien el modelo reconoce caracteres estilizados de una fuente manuscrita.
+Esto permite evaluar qué tan bien el modelo reconoce caracteres estilizados y fuentes tipográficas.
 
 ---
 
@@ -97,13 +111,15 @@ El proyecto tiene la siguiente estructura:
 │   ├── segmented_chars/ # Carpeta donde se guardan caracteres segmentados
 │
 ├── models/
-│   ├── cnn_model.keras  # Modelo CNN entrenado
-│   ├── label_to_index.npy # Diccionario de etiquetas del modelo
+│   ├── cnn_model.keras       # Modelo CNN entrenado para manuscritos
+│   ├── cnn_model_fonts.keras # Modelo CNN entrenado para fuentes tipográficas
+│   ├── label_to_index.npy    # Diccionario de etiquetas del modelo
 │
 ├── src/
 │   ├── main.py                 # Archivo principal
 │   ├── segment_characters.py   # Segmenta caracteres, detecta espacios y cambios de línea
-│   ├── predict_word.py # Predice texto
+│   ├── predict_word.py         # Predice texto
+│   ├── generate_dataset.py     # Crea un dataset a partir de fuentes TTF
 │
 ├── requirements.txt    # Dependencias del proyecto
 └── README.md           # Documentación del proyecto
@@ -128,7 +144,7 @@ Puedes usar `segment_characters.py` para segmentar los caracteres de una imagen 
    ```bash
    python src/segment_characters.py
    ```
-4. Los caracteres segmentados, se guardarán en `data/segmented_chars`.
+4. Los caracteres segmentados se guardarán en `data/segmented_chars`.
 
 ---
 
@@ -143,7 +159,7 @@ El archivo `main.py` automatiza el flujo completo: selección de imagen, segment
    python src/main.py
    ```
 2. Aparecerá un cuadro de diálogo para seleccionar una imagen desde tu explorador de archivos. Elige una imagen de la carpeta `data/input`.
-3. El sistema segmentará los caracteres, detectará espacios y predirá el texto presente en la imagen.
+3. El sistema segmentará los caracteres, detectará espacios y predecirá el texto presente en la imagen.
 4. El texto predicho se mostrará en una ventana emergente profesional, y luego también en la consola.
 
 ---
